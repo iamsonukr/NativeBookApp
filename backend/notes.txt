@@ -1,0 +1,19 @@
+// process
+process.exit(1) means failuer
+process.exit(0) means success
+
+// or opereator in mongodb query
+In MongoDB, the $or operator is used to perform a logical OR operation on an array of two or more query expressions. This means it 
+returns documents that match at least one of the given conditions.
+Syntax:
+{
+  $or: [
+    { condition1 },
+    { condition2 },
+    ...
+  ]
+}
+
+// GENERATE RANDOM STRONG PASSWORD
+openssl rand -base64 32
+
