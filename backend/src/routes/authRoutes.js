@@ -6,7 +6,7 @@ import bcrypt from 'bcryptjs'
 const router=express.Router()
 
 const generateToken=(userId)=>{
-    return jwt.sign({userId:userId},process.env.SECRET_KEY,{expiresIn:"1d"})
+    return jwt.sign({userId:userId},process.env.SECRET_KEY,{expiresIn:'1d'})
 }
 
 router.post("/register",async(req,res)=>{

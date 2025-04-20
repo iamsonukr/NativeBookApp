@@ -1,0 +1,39 @@
+------------- install expo --------------------
+npx create-expo-app@latest .
+
+
+-------------- npx expo -----------------------
+
+npx expo: 
+-base command that needs additional arguments. 
+-show you the Expo CLI help menu with all available commands and options.
+Some other common Expo commands include:
+
+npx expo install - to install Expo-compatible versions of packages
+npx expo start -  launches your Expo project's development server.
+npx expo build - to build app binaries
+npx expo publish - to publish your app to Expo's servers
+npx expo eject - to eject from the managed workflow
+
+
+----------------- install aything from expo -----------------------
+
+npx expo install expo-image
+
+<Image >
+Highly optimized image component for React Native.
+
+npx expo install expo-router
+
+
+------------------ using Image -------------------------
+
+https://storyset.com/
+
+<Image source={require("../assets/images/icon.png")} />
+
+<Image source={{uri:"https://images.unsplash.com/photo-1681457953088-8d215c000899?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"}} />
+
+
+
+
