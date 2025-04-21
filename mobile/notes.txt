@@ -25,6 +25,10 @@ Highly optimized image component for React Native.
 
 npx expo install expo-router
 
+-------------Istalll asyn Storage ---------
+
+npx expo install @react-native-async-storage/async-storage
+
 
 ------------------ using Image -------------------------
 
