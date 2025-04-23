@@ -10,7 +10,7 @@ import { useAuthStore } from '../../store/authStore.js'
 
 
 export default function Signup() {
-  const {user, sayHello,setUser, register}=useAuthStore()
+  const {user, sayHello,setUser, register, url}=useAuthStore()
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("")
   const [Username, setUsername] = useState("")

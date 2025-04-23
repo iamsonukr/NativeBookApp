@@ -4,8 +4,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 // The create function is Zustand's core API that takes a callback function and returns a custom hook useAuthUser()
 // This callback receives several parameters, with 'set' being the primary way to update state
+const LiveUrl="https://nativebookapp.onrender.com/api"
+const  LocalUrl="http://localhost:3001/api"
 
 export const useAuthStore=create((set)=>({
+    
     token:null,
     user:null,
     isLoading:false,
@@ -13,7 +16,7 @@ export const useAuthStore=create((set)=>({
     register:async(username,email, password)=>{
         set({isLoading:true})
         try {
-            const response=await fetch("http://localhost:3001/api/auth/register",{
+            const response=await fetch(`${LiveUrl}/auth/register`,{
                 method:"POST",
                 headers:{
                     "Content-Type":"application/json"
@@ -26,8 +29,11 @@ export const useAuthStore=create((set)=>({
             })
 
             const data=await response.json()
+            console.log("This is data",data)
+            console.log("This is data.data",data.data)
+            console.log("This is data.token",data.token)
             if(!response.ok)throw new Error(data.message || "Something went wrong.");
-            await AsyncStorage.setItem("user", JSON.stringify(data.user))
+            await AsyncStorage.setItem("user", JSON.stringify(data.data))
             await AsyncStorage.setItem("token", data.token)
 
             set({token: data.token, user:data.user, isLoading:false});
@@ -37,6 +43,48 @@ export const useAuthStore=create((set)=>({
             return ({success:false, error:error.message})
             
         }
+    },
+
+    checkAuth:async()=>{
+        try {
+            console.log("Fetching token and user")
+            const token=await AsyncStorage.getItem("token");
+            const userJson=await AsyncStorage.getItem("user");
+            const user=userJson?JSON.parse(userJson):null;
+            console.log("Fetching done", token, user)
+            set({token,user})
+        } catch (error) {
+            console.log(error)
+        }
+    },
+
+    login:async(username,password)=>{
+        try {
+            const response= await fetch(`${LiveUrl}/auth/login`,
+                {
+                    method:"POST",
+                    headers:{},
+                    body:JSON.stringify({
+                        username,
+                        password
+                    })
+                }
+            )
+            if(!response.ok)throw new Error(data.message || "Something went wrong.");
+            await AsyncStorage.setItem("user", JSON.stringify(data.data))
+            await AsyncStorage.setItem("token", data.token)
+
+            set({token: data.token, user:data.user, isLoading:false});
+            return { sucess:true, message:"User created successfully" }
+        } catch (error) {
+            console.log(error)
+        }
+    },
+
+    logout:async ()=>{
+        await AsyncStorage.removeItem("token")
+        await AsyncStorage.removeItem("user")
+        set({token:null, user:null})
     }
 
 }))
