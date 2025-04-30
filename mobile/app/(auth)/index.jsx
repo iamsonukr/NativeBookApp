@@ -5,14 +5,29 @@ import styles from "../../assets/styles/login.styles.js"
 import { Image } from 'expo-image'
 import { Ionicons } from "@expo/vector-icons"
 import COLORS from '../../constants/colors.js'
+import { useAuthStore } from '../../store/authStore.js'
 
 export default function Login() {
+  const {login} =useAuthStore()
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
-  const handleLogin = () => {
+  const handleLogin = async() => {
+    try {
+      const result=await login(email,password)
+      if (!result.success) {
+           console.log("Showing error alert");
+           Alert.alert("Error", result.error);
+         } else {
+           console.log("Showing success alert");
+           Alert.alert("Success", "User Logged in successfully");
+         }
+    } catch (error) {
+      console.log(error)
+      Alert.alert("Error", error.message || "Something went wrong.");
+    }
 
   }
   return (

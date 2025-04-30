@@ -54,6 +54,7 @@ router.post("/register",async(req,res)=>{
 })
 
 router.post("/login",async(req,res)=>{
+    console.log(req.body)
    try {
     const {email,password}=req.body
 
@@ -80,7 +81,7 @@ router.post("/login",async(req,res)=>{
     return res.status(200).json({status:"success", message:"User logged in successfully.", data:modUser, token:token})
 
    } catch (error) {
-    console.log(error)
+    console.log(error.message)
     return res.status(500).json({status:"failed", message:error.message || "Internsal Server error."})
     
    }

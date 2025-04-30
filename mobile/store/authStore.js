@@ -58,24 +58,28 @@ export const useAuthStore=create((set)=>({
         }
     },
 
-    login:async(username,password)=>{
+    login:async(email,password)=>{
         try {
-            const response= await fetch(`${LiveUrl}/auth/login`,
+            console.log("data received for login",email, password)
+            const response= await fetch(`${LocalUrl}/auth/login`,
                 {
                     method:"POST",
-                    headers:{},
+                    headers:{
+                        "Content-Type":"application/json"
+                    },
                     body:JSON.stringify({
-                        username,
+                        email,
                         password
                     })
                 }
             )
+            const data=await response.json()
             if(!response.ok)throw new Error(data.message || "Something went wrong.");
             await AsyncStorage.setItem("user", JSON.stringify(data.data))
             await AsyncStorage.setItem("token", data.token)
 
             set({token: data.token, user:data.user, isLoading:false});
-            return { sucess:true, message:"User created successfully" }
+            return { sucess:true, message:"User Logged in successfully" }
         } catch (error) {
             console.log(error)
         }
