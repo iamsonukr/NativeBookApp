@@ -1,4 +1,4 @@
-import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, KeyboardAvoidingView, Platform } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, KeyboardAvoidingView, Platform, Alert } from 'react-native'
 import {Link} from 'expo-router'
 import React, { useState } from 'react'
 import styles from "../../assets/styles/login.styles.js"
@@ -8,11 +8,10 @@ import COLORS from '../../constants/colors.js'
 import { useAuthStore } from '../../store/authStore.js'
 
 export default function Login() {
-  const {login} =useAuthStore()
+  const {login, isLoading} =useAuthStore()
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
 
   const handleLogin = async() => {
     try {
