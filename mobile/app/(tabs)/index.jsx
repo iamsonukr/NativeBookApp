@@ -100,7 +100,6 @@ export default function Home() {
       <View style={styles.bookImageContainer}>
         <Image source={item.image} style={styles.bookImage}/>
       </View>
-      <Link href="/create" >Lin
 
       <View style={styles.bookImageContainer}>
         <Image source={item.image} style={styles.bookImage} contentFit="cover" />
