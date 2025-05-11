@@ -3,9 +3,9 @@ import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import SafeScreen from '../components/SafeScreen'
-import {useAuthStore} from '../store/authStore'
+import { SafeAreaProvider ,SafeAreaView} from 'react-native-safe-area-context';
+import { useAuthStore } from '../store/authStore'
+import { useFonts } from 'expo-font';
 
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -13,27 +13,36 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
 
-  const router=useRouter()
-  const segments=useSegments()
-  const {token, checkAuth, user} = useAuthStore()
+  const router = useRouter()
+  const segments = useSegments()
+  const { token, checkAuth, user } = useAuthStore()
+  console.log("segments", segments)
 
-  console.log("segments",segments)
+  const SafeScreen = ({ children, style }) => {
+    return (
+      <SafeAreaView style={[{ flex: 1 }, style]}>
+        {children}
+      </SafeAreaView>
+    );
+  };
+  const [fontLoaded] = useFonts({
 
-  useEffect(()=>{
+  })
+
+  useEffect(() => {
+    SplashScreen.hideAsync()
     checkAuth()
-  },[])
+  }, [])
 
   // handle navigation
-  useEffect(()=>{
-    const inAuthScreen = segments [0] === "(auth)";
-    const inTabScreen = segments [0] === "(tab)";
+  useEffect(() => {
+    const inAuthScreen = segments[0] === "(auth)";
+    const inTabScreen = segments[0] === "(tab)";
+    const isSignedIn = token && user
+    if (!isSignedIn && !inAuthScreen) router.replace("/(auth)");
+    else if (isSignedIn && inAuthScreen) router.replace("/(tabs)")
 
-    const isSignedIn=token && user
-
-    if(!isSignedIn && !inAuthScreen) router.replace("/(auth)");
-    else if(isSignedIn && inAuthScreen) router.replace("/(tabs)")
-
-  },[user,token,segments])
+  }, [user, token, segments])
 
   return (
     <SafeAreaProvider>
@@ -48,4 +57,3 @@ export default function RootLayout() {
 
   )
 }
- 

@@ -8,7 +8,7 @@ import COLORS from '../../constants/colors.js'
 import { useAuthStore } from '../../store/authStore.js'
 
 export default function Login() {
-  const {login, isLoading} =useAuthStore()
+  const {login, isLoading,isCheckingAuth} =useAuthStore()
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
@@ -29,6 +29,8 @@ export default function Login() {
     }
 
   }
+
+  if(isCheckingAuth)return null
   return (
     <KeyboardAvoidingView
       style={{flex:1}}
